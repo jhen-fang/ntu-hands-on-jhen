@@ -17,13 +17,13 @@ steps:
 ### Build
   - id: 'build'
     name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'us-central1-docker.pkg.dev/ntu-hands-on-lab-4-459706/$AR_REPO_NAME/frontend:${SHORT_SHA}', './src/frontend']
+    args: ['build', '-t', 'us-central1-docker.pkg.dev/ntu-hands-on-lab-4-459706/ntu-lab-repo/frontend:dev', './src/frontend']
     waitFor: ['-']
 
 ### Publish
   - id: 'publish'
     name: 'gcr.io/cloud-builders/docker'
-    args: ['push',  'us-central1-docker.pkg.dev/ntu-hands-on-lab-4-459706/$AR_REPO_NAME/frontend:${SHORT_SHA}']
+    args: ['push',  'us-central1-docker.pkg.dev/ntu-hands-on-lab-4-459706/ntu-lab-repo/frontend:dev']
 
 ### Deploy
   - id: 'deploy'
@@ -40,12 +40,12 @@ steps:
             --project "$${PROJECT}" \
             --location "us-central1"  
 
-          sed -i 's|us-central1-docker.pkg.dev/ntu-hands-on-lab-4-459706/$AR_REPO_NAME/frontend:.*|us-central1-docker.pkg.dev/ntu-hands-on-lab-4-459706/$AR_REPO_NAME/frontend:${SHORT_SHA}|' ./k8s/deployments/prod/*.yaml
+          sed -i 's|us-central1-docker.pkg.dev/ntu-hands-on-lab-4-459706/ntu-lab-repo/frontend:.*|us-central1-docker.pkg.dev/ntu-hands-on-lab-4-459706/ntu-lab-repo/frontend:dev|' ./k8s/deployments/prod/*.yaml
           
           kubectl apply -f k8s/deployments/prod/frontend.yaml
 
 images:
-  - us-central1-docker.pkg.dev/ntu-hands-on-lab-4-459706/$AR_REPO_NAME/frontend
+  - us-central1-docker.pkg.dev/ntu-hands-on-lab-4-459706/ntu-lab-repo/frontend
 
 options:
   logging: CLOUD_LOGGING_ONLY

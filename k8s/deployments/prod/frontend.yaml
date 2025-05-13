@@ -30,7 +30,7 @@ spec:
                 - ALL
             privileged: false
             readOnlyRootFilesystem: true
-          image: us-central1-docker.pkg.dev/ntu-hands-on-lab-4-459706/$AR_REPO_NAME/frontend:1.0.0
+          image: us-central1-docker.pkg.dev/ntu-hands-on-lab-4-459706/ntu-lab-repo/frontend:1.0.0
           ports:
           - containerPort: 8080
           readinessProbe:

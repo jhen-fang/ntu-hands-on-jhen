@@ -17,13 +17,13 @@ steps:
 ### Build
   - id: 'build'
     name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/$AR_REPO_NAME/$APP_NAME:${SHORT_SHA}', './src/frontend']
+    args: ['build', '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/$_AR_REPO_NAME/$APP_NAME:${SHORT_SHA}', './src/frontend']
     waitFor: ['-']
 
 ### Publish
   - id: 'publish'
     name: 'gcr.io/cloud-builders/docker'
-    args: ['push',  'us-central1-docker.pkg.dev/$PROJECT_ID/$AR_REPO_NAME/$APP_NAME:${SHORT_SHA}']
+    args: ['push',  'us-central1-docker.pkg.dev/$PROJECT_ID/$_AR_REPO_NAME/$APP_NAME:${SHORT_SHA}']
 
 ### Deploy
   - id: 'deploy'
@@ -40,12 +40,12 @@ steps:
             --project "$${PROJECT}" \
             --location "${LOCATION}"  
 
-          sed -i 's|us-central1-docker.pkg.dev/$PROJECT_ID/$AR_REPO_NAME/$APP_NAME:.*|us-central1-docker.pkg.dev/$PROJECT_ID/$AR_REPO_NAME/$APP_NAME:${SHORT_SHA}|' ./k8s/deployments/prod/*.yaml
+          sed -i 's|us-central1-docker.pkg.dev/$PROJECT_ID/$_AR_REPO_NAME/$APP_NAME:.*|us-central1-docker.pkg.dev/$PROJECT_ID/$_AR_REPO_NAME/$APP_NAME:${SHORT_SHA}|' ./k8s/deployments/prod/*.yaml
           
           kubectl apply -f k8s/deployments/prod/frontend.yaml
 
 images:
-  - us-central1-docker.pkg.dev/$PROJECT_ID/$AR_REPO_NAME/$APP_NAME
+  - us-central1-docker.pkg.dev/$PROJECT_ID/$_AR_REPO_NAME/$APP_NAME
 
 options:
   logging: CLOUD_LOGGING_ONLY
